@@ -61,11 +61,8 @@ export default function Authenticated({ user, children }) {
                     <a className="flex justify-center text-xl text-yellow-500 font-semibold dark:text-yellow-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="#" aria-label="Brand">Travel&Tour</a>
                     <ul className="menu w-56 mt-6  border-t border-gray-200 dark:border-gray-700">
                         <li className={`mb-2 ${url === '/admin/dashboard' ? 'active' : ''}`}><Link href={route('admin.dashboard')}>Dashboard</Link></li>
-                        {/* <li className={`mb-2 ${url.startsWith('/admin/brands') ? 'active' : ''}`} ><Link href={route('admin.brands.index')}>Brand</Link></li> */}
-                        {/* <li className={`mb-2 ${url.startsWith('/admin/categories') ? 'active' : ''}`}><Link href={route('admin.categories.index')}>Category</Link></li> */}
+                        <li className={`mb-2 ${url.startsWith('/admin/categories') ? 'active' : ''}`}><Link href={route('admin.categories.index')}>Category</Link></li>
                         {/* <li className={`mb-2 ${url.startsWith('/admin/products') ? 'active' : ''}`}><Link href={route('admin.products.index')}>Product</Link></li> */}
-                        {/* <li className={`mb-2 ${url.startsWith('/admin/attributes') ? 'active' : ''}`}><Link href={route('admin.attributes.index')}>Attribute</Link></li> */}
-                        {/* <li className={`mb-2 ${url.startsWith('/admin/orders') ? 'active' : ''}`}><Link href={route('admin.orders.index')}>Order</Link></li> */}
                         {/* <li className={`mb-2 ${url.startsWith('/admin/sliders') ? 'active' : ''}`}><Link href={route('admin.sliders.index')}>Slider</Link></li> */}
                         <li className='mb-2'>
                             <details>
