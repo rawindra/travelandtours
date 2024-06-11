@@ -1,0 +1,57 @@
+import DangerButton from '@/Components/DangerButton';
+import LinkAsButton from '@/Components/LinkAsButton';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Head, useForm } from '@inertiajs/react';
+
+export default function Index({ auth, products, app }) {
+    const { delete: destroy, processing } = useForm()
+
+    function submit(e, product) {
+        e.preventDefault()
+        confirm('Are you sure?') && destroy(`/admin/products/${product.id}`)
+    }
+
+    return (
+        <AuthenticatedLayout
+            user={auth.user}
+        >
+            <Head title="Product" />
+            <LinkAsButton href={route('admin.products.create')} className="">Create</LinkAsButton>
+
+            <div className="overflow-x-auto">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.data.map(product => (
+                            <tr key={product.id}>
+                                <td>{product.name}</td>
+                                <td>
+                                    <img src={app.storage_url + '/' + product.image} alt={product.name} className='size-16' />
+                                </td>
+                                <td className='truncate'>{product.description}</td>
+                                <td>{product.price}</td>
+                                <td>{product.category.name}</td>
+                                <td className='flex items-center gap-2'>
+                                    <LinkAsButton href={route('admin.products.edit', product.id)} className="bg-yellow-500 btn-xs">Edit</LinkAsButton>
+                                    <form onSubmit={(event) => submit(event, product)}>
+                                        <DangerButton className="btn-xs" disabled={processing}>Delete</DangerButton>
+                                    </form>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+        </AuthenticatedLayout>
+    )
+}
