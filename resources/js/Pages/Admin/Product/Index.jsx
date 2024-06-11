@@ -24,7 +24,7 @@ export default function Index({ auth, products, app }) {
                         <tr>
                             <th>Name</th>
                             <th>Image</th>
-                            <th>Description</th>
+                            <th>Excerpt</th>
                             <th>Price</th>
                             <th>Category</th>
                             <th>Actions</th>
@@ -37,7 +37,7 @@ export default function Index({ auth, products, app }) {
                                 <td>
                                     <img src={app.storage_url + '/' + product.image} alt={product.name} className='size-16' />
                                 </td>
-                                <td className='truncate'>{product.description}</td>
+                                <td className='truncate'>{product.excerpt}</td>
                                 <td>{product.price}</td>
                                 <td>{product.category.name}</td>
                                 <td className='flex items-center gap-2'>

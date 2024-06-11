@@ -1,18 +1,28 @@
 import PrimaryButton from '@/Components/PrimaryButton';
+import TinyEditor from '@/Components/TinyEditor';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router, useForm } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function Edit({ auth, categories, product }) {
     const { data, setData, processing, errors } = useForm({
         name: product.name,
-        description: product.description,
+        excerpt: product.excerpt,
         image: {},
         price: product.price,
         category_id: product.category_id,
     })
 
+    const [editorContent, setEditorContent] = useState(product.description);
+
+    const handleEditorContentChange = (content) => {
+        setEditorContent(content);
+    };
+
     function submit(e) {
         e.preventDefault()
+
+        data.description = editorContent
 
         router.post(route('admin.products.update', product.id), {
             _method: 'put',
@@ -43,11 +53,11 @@ export default function Edit({ auth, categories, product }) {
                         <span className="label-text">Short Description</span>
                     </div>
                     <textarea
-                        value={data.description}
-                        onChange={e => setData('description', e.target.value)}
+                        value={data.excerpt}
+                        onChange={e => setData('excerpt', e.target.value)}
                         className="input input-bordered max-w-xs"
                     ></textarea>
-                    {errors.description && <span className='text-red-500'>{errors.description}</span>}
+                    {errors.excerpt && <span className='text-red-500'>{errors.excerpt}</span>}
                 </label>
 
                 <label className="form-control w-full max-w-xs">
@@ -97,6 +107,13 @@ export default function Edit({ auth, categories, product }) {
                         className="file-input file-input-bordered w-full max-w-xs"
                     />
                     {errors.image && <span className='text-red-500'>{errors.image}</span>}
+                </label>
+
+                <label className="form-control w-full">
+                    <div className="label">
+                        <span className="label-text">Long Description</span>
+                    </div>
+                    <TinyEditor onContentChange={handleEditorContentChange} initialValue={editorContent} />
                 </label>
 
                 <PrimaryButton className='mt-4' disabled={processing}>Update</PrimaryButton>
