@@ -1,5 +1,6 @@
 import DangerButton from '@/Components/DangerButton';
 import LinkAsButton from '@/Components/LinkAsButton';
+import Pagination from '@/Components/Pagination';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 
@@ -50,6 +51,7 @@ export default function Index({ auth, products, app }) {
                         ))}
                     </tbody>
                 </table>
+                <Pagination links={products.links} />
             </div>
 
         </AuthenticatedLayout>
