@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -41,7 +42,8 @@ class HandleInertiaRequests extends Middleware
             ],
             'app' => [
                 'storage_url' => env('STORAGE_URL'),
-            ]
+            ],
+            'categories' => Category::all()
         ];
     }
 }

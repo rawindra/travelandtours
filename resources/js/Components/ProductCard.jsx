@@ -1,14 +1,15 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { FaStar } from "react-icons/fa";
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
+    const app = usePage().props.app
     return (
         <Link href={route('product.show')}>
             <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                <img className="w-full" src="#" alt="Sunset in the mountains" />
+                <img className="w-full h-[200px]" src={app.storage_url + '/' + product.image} alt={product.name} />
                 <div className="py-4">
-                    <div className='text-md mb-2'>From $1399</div>
-                    <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
+                    <div className='text-md mb-2'>From ${product.price}</div>
+                    <div className="font-bold text-xl mb-2">{product.name}</div>
                     <div className="flex flex-wrap items-center gap-1">
                         <FaStar className="w-3 sm:w-3.5" />
                         <div className="flex gap-[7px] ml-1 items-center">
