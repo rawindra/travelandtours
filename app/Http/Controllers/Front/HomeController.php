@@ -16,10 +16,17 @@ class HomeController extends Controller
         ]);
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
         return inertia('Front/Show', [
-            'product' => $product
+            'product' => Product::find($id),
+        ]);
+    }
+
+    public function categoryProducts(Category $category)
+    {
+        return inertia('Front/Home', [
+            'products' => Product::where('category_id', $category->id)->paginate(12)
         ]);
     }
 }

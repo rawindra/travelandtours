@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa";
 const ProductCard = ({ product }) => {
     const app = usePage().props.app
     return (
-        <Link href={route('product.show')}>
+        <Link href={route('product.show', product.id)}>
             <div className="max-w-sm rounded overflow-hidden shadow-lg">
                 <img className="w-full h-[200px]" src={app.storage_url + '/' + product.image} alt={product.name} />
                 <div className="py-4">

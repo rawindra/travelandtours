@@ -1,4 +1,4 @@
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import GetIcon from "../Icon";
 
 const Category = () => {
@@ -9,10 +9,10 @@ const Category = () => {
             <div className="flex overflow-x-auto scrollbar-hide gap-2">
                 {categories && categories.map(category => (
 
-                    <a href="#" className="pb-1 border-b-2 hover:border-b-2" key={category.id}>
+                    <Link href={route('category.products', category.id)} className="pb-1 border-b-2 hover:border-b-2" key={category.id}>
                         <GetIcon icon={category.icon} size={30} className="mx-auto" />
                         <span>{category.name}</span>
-                    </a>
+                    </Link>
                 ))}
             </div>
         </div>

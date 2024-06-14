@@ -11,7 +11,7 @@ import { FaArrowDown } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa";
 import { useState } from "react";
 
-const Show = () => {
+const Show = ({ product }) => {
     const [changeQuantity, setChangeQuantity] = useState(false);
     const [adultQuantity, setAdultQuantity] = useState(1);
     const [childQuantity, setChildQuantity] = useState(0);
@@ -49,7 +49,7 @@ const Show = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="py-2">
-                        <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
+                        <div className="font-bold text-xl mb-2">{product.name}</div>
                         <div className="flex flex-wrap items-center gap-1">
                             <FaStar className="w-3 sm:w-3.5" />
                             <FaStar className="w-3 sm:w-3.5" />
@@ -67,7 +67,7 @@ const Show = () => {
                             </div>
                         </div>
                         <div className="border-t-2 mt-4 py-4">
-                            <p>Embark on the Manaslu Circuit Trek and explore unexplored trails, lush jungles, and.</p>
+                            <p>{product.excerpt}</p>
                             <div className="flex flex-col gap-2 mt-2">
                                 <div className="flex items-center gap-1">
                                     <span><FaClock className="w-6" size={17} /></span>
@@ -88,8 +88,8 @@ const Show = () => {
                                     </span>
                                 </div>
                             </div>
-                            <div className="border-t-2 mt-4 py-4">
-                                Tiny Editior Dump
+                            <div className="border-t-2 mt-4 py-4" dangerouslySetInnerHTML={{ __html: product.description }}>
+
                             </div>
                         </div>
                     </div>

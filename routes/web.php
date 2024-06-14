@@ -10,7 +10,8 @@ use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/product/show', [HomeController::class, 'show'])->name('product.show');
+Route::get('/product/{id}/show', [HomeController::class, 'show'])->name('product.show');
+Route::get('/categories/{category}/products', [HomeController::class, 'categoryProducts'])->name('category.products');
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
