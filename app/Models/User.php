@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return auth()->check() && auth()->user()->role === 'admin';
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

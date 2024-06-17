@@ -13,13 +13,15 @@ import {
     parse,
     startOfToday,
 } from 'date-fns'
-import { useState } from 'react'
+import { forwardRef, useImperativeHandle, useState } from 'react'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Calendar() {
+const Calendar = forwardRef((props, ref) => {
+
+
     let today = startOfToday()
     let [selectedDay, setSelectedDay] = useState(today)
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
@@ -39,6 +41,8 @@ export default function Calendar() {
         let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
     }
+
+    useImperativeHandle(ref, () => ({ getCalendarState: () => { return { selectedDay } } }), [selectedDay]);
 
     return (
         <div className="pt-16">
@@ -118,7 +122,9 @@ export default function Calendar() {
             </div>
         </div>
     )
-}
+})
+
+export default Calendar
 
 let colStartClasses = [
     '',

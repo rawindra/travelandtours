@@ -1,7 +1,7 @@
 import Calendar from "@/Components/Calendar";
 import Slider from "@/Components/Slider";
 import FrontLayout from "@/Layouts/FrontLayout"
-import { Head } from "@inertiajs/react"
+import { Head, useForm } from "@inertiajs/react"
 import { FaStar } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { RxCrossCircled } from "react-icons/rx";
@@ -9,9 +9,15 @@ import { FaPlusCircle } from "react-icons/fa";
 import { FaMinusCircle } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { format, parse } from "date-fns";
 
 const Show = ({ product }) => {
+    const calendarRef = useRef();
+
+    const { data, post } = useForm();
+
     const [changeQuantity, setChangeQuantity] = useState(false);
     const [adultQuantity, setAdultQuantity] = useState(1);
     const [childQuantity, setChildQuantity] = useState(0);
@@ -29,6 +35,18 @@ const Show = ({ product }) => {
             selectedQuantity = `${selectedQuantity} ${youthQuantity} Youth`
         }
         return selectedQuantity
+    }
+
+    const bookNow = () => {
+        const selectedDay = calendarRef.current.getCalendarState().selectedDay
+        const date = format(selectedDay, 'yyyy-MM-dd')
+        const quantity = calculateSelectedQuantity()
+
+        data.date = date
+        data.quantity = quantity
+        data.product_id = product.id
+
+        post(route('bookings.store'), data)
     }
 
     return (
@@ -124,7 +142,10 @@ const Show = ({ product }) => {
                                 </div>
                             </div>
                         }
-                        <Calendar />
+                        <Calendar ref={calendarRef} />
+                        <PrimaryButton onClick={bookNow}>
+                            Book Now
+                        </PrimaryButton>
                     </div>
                 </div>
             </div>

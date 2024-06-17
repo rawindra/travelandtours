@@ -15,7 +15,7 @@ const Navbar = () => {
                     </div>
                     {auth.user ?
                         <div className="flex hidden md:block">
-                            <Link href="#" className="mr-2 text-green-500">Bookings</Link>
+                            <Link href={route('bookings')} className="mr-2 text-green-500">Bookings</Link>
                             <Link href={route('logout')} method="post" as="button" className="text-red-500">Logout</Link>
                         </div>
                         :

@@ -10,7 +10,7 @@ const Footer = () => {
                 <p className="text-yellow-500">Travel and Tour</p>
                 {auth.user ?
                     <div className="flex">
-                        <Link href="#" className="mr-2 text-green-500">Bookings</Link>
+                        <Link href={route('bookings')} className="mr-2 text-green-500">Bookings</Link>
                         <Link href={route('logout')} method="post" as="button" className="text-red-500">Logout</Link>
                     </div>
                     :
