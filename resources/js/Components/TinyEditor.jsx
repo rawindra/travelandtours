@@ -2,13 +2,9 @@ import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 const TinyEditor = forwardRef((props, ref) => {
-    console.log("🚀 ~ TinyEditor ~ ref:", ref)
-    console.log("🚀 ~ TinyEditor ~ props:", props)
     const editorRef = useRef();
 
-    // if (ref) {
     useImperativeHandle(ref, () => ({ getEditorState: () => { return { content: editorRef.current.getContent() } } }), [editorRef]);
-    // }
 
     return (
         <>
