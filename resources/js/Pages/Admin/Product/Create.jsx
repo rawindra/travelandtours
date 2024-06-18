@@ -2,9 +2,11 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TinyEditor from '@/Components/TinyEditor';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { useRef } from 'react';
 
 export default function Create({ auth, categories }) {
+    const editorRef = useRef();
+
     const { data, setData, post, processing, errors } = useForm({
         name: '',
         excerpt: '',
@@ -14,15 +16,10 @@ export default function Create({ auth, categories }) {
         category_id: '',
     })
 
-    const [editorContent, setEditorContent] = useState('');
-
-    const handleEditorContentChange = (content) => {
-        setEditorContent(content);
-    };
 
     function submit(e) {
         e.preventDefault()
-        data.description = editorContent
+        data.description = editorRef.current.getEditorState().content
         post('/admin/products')
     }
 
@@ -63,7 +60,7 @@ export default function Create({ auth, categories }) {
                     <select
                         id="category"
                         value={data.category_id}
-                        className="mt-1 block max-w-xs"
+                        className="input input-bordered max-w-xs"
                         onChange={(e) => setData("category_id", e.target.value)}
                     >
                         <option value="">Select Category</option>
@@ -109,7 +106,7 @@ export default function Create({ auth, categories }) {
                     <div className="label">
                         <span className="label-text">Long Description</span>
                     </div>
-                    <TinyEditor onContentChange={handleEditorContentChange} initialValue={editorContent} />
+                    <TinyEditor ref={editorRef} initialValue="" />
                 </label>
 
                 <PrimaryButton className='mt-4' disabled={processing}>Create</PrimaryButton>

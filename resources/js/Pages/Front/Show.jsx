@@ -11,7 +11,8 @@ import { FaArrowDown } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa";
 import { useRef, useState } from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
+import parse from "html-react-parser";
 
 const Show = ({ product }) => {
     const calendarRef = useRef();
@@ -106,8 +107,8 @@ const Show = ({ product }) => {
                                     </span>
                                 </div>
                             </div>
-                            <div className="border-t-2 mt-4 py-4" dangerouslySetInnerHTML={{ __html: product.description }}>
-
+                            <div className="no-tailwindcss-base">
+                                {parse(product.description)}
                             </div>
                         </div>
                     </div>

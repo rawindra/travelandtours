@@ -1,4 +1,26 @@
 @tailwind base;
+
+@layer base {
+
+    .no-tailwindcss-base,
+    .no-tailwindcss-base *,
+    .no-tailwindcss-base>* {
+        font-size: revert;
+        font-weight: revert;
+        margin: revert;
+        display: revert;
+        vertical-align: revert;
+        max-width: revert;
+        height: revert;
+        border-width: revert;
+        border-style: revert;
+        border-color: revert;
+        outline: revert;
+        list-style: revert;
+        padding: revert;
+    }
+}
+
 @tailwind components;
 @tailwind utilities;
 

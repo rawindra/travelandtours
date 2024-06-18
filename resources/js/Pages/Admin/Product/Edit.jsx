@@ -2,9 +2,11 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TinyEditor from '@/Components/TinyEditor';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router, useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function Edit({ auth, categories, product }) {
+    const editorRef = useRef();
+
     const { data, setData, processing, errors } = useForm({
         name: product.name,
         excerpt: product.excerpt,
@@ -13,16 +15,10 @@ export default function Edit({ auth, categories, product }) {
         category_id: product.category_id,
     })
 
-    const [editorContent, setEditorContent] = useState(product.description);
-
-    const handleEditorContentChange = (content) => {
-        setEditorContent(content);
-    };
-
     function submit(e) {
         e.preventDefault()
 
-        data.description = editorContent
+        data.description = editorRef.current.getEditorState().content
 
         router.post(route('admin.products.update', product.id), {
             _method: 'put',
@@ -67,7 +63,7 @@ export default function Edit({ auth, categories, product }) {
                     <select
                         id="category"
                         value={data.category_id}
-                        className="mt-1 block max-w-xs"
+                        className="input input-bordered max-w-xs"
                         onChange={(e) => setData("category_id", e.target.value)}
                     >
                         <option value="">Select Category</option>
@@ -113,7 +109,7 @@ export default function Edit({ auth, categories, product }) {
                     <div className="label">
                         <span className="label-text">Long Description</span>
                     </div>
-                    <TinyEditor onContentChange={handleEditorContentChange} initialValue={editorContent} />
+                    <TinyEditor ref={editorRef} initialValue={product.description} />
                 </label>
 
                 <PrimaryButton className='mt-4' disabled={processing}>Update</PrimaryButton>
