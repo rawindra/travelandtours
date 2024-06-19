@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import SecondaryButton from '@/Components/SecondaryButton';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -90,7 +91,11 @@ export default function Login({ status, canResetPassword }) {
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in
                     </PrimaryButton>
+
                 </div>
+                    <Link href="auth/facebook/login" className=" button outline outline-1 p-1 rounded-sm bg-blue-950 text-white">
+                        Facebook
+                    </Link>
             </form>
         </GuestLayout>
     );
