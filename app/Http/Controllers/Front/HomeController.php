@@ -44,11 +44,16 @@ class HomeController extends Controller
             'date' => 'required',
             'quantity' => 'required',
             'product_id' => 'required',
+            'members' => 'required|array|min:1',
+            'members.*.name' => 'required|string',
+            'members.*.number' => 'required|string',
         ]);
 
         $validated['user_id'] = auth()->user()->id;
 
-        Booking::create($validated);
+        $booking = Booking::create($validated);
+
+        $booking->members()->createMany($request->members);
 
         return redirect()->route('bookings');
     }

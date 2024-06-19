@@ -13,16 +13,45 @@ import { useRef, useState } from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import { format } from "date-fns";
 import parse from "html-react-parser";
+import Modal from '@/Components/Modal';
+import SecondaryButton from "@/Components/SecondaryButton";
+import { FaTrash } from "react-icons/fa";
 
 const Show = ({ product }) => {
     const calendarRef = useRef();
 
-    const { data, post } = useForm();
+    const { data, post, processing } = useForm();
 
     const [changeQuantity, setChangeQuantity] = useState(false);
     const [adultQuantity, setAdultQuantity] = useState(1);
     const [childQuantity, setChildQuantity] = useState(0);
     const [youthQuantity, setYouthQuantity] = useState(0);
+    const [isOpen, setIsOpen] = useState(false)
+    const [members, setMembers] = useState([{ name: '', number: '' }]);
+
+    const handleChange = (index, event) => {
+        const values = [...members];
+        values[index][event.target.name] = event.target.value;
+        setMembers(values);
+    };
+
+    const handleAddMember = () => {
+        setMembers([...members, { name: '', number: '' }]);
+    };
+
+    const handleRemoveMember = (index) => {
+        const values = [...members];
+        values.splice(index, 1);
+        setMembers(values);
+    };
+
+    function open() {
+        setIsOpen(true)
+    }
+
+    function close() {
+        setIsOpen(false)
+    }
 
     const calculateSelectedQuantity = () => {
         let selectedQuantity = "";
@@ -38,7 +67,9 @@ const Show = ({ product }) => {
         return selectedQuantity
     }
 
-    const bookNow = () => {
+    const bookNow = (e) => {
+        e.preventDefault()
+
         const selectedDay = calendarRef.current.getCalendarState().selectedDay
         const date = format(selectedDay, 'yyyy-MM-dd')
         const quantity = calculateSelectedQuantity()
@@ -46,6 +77,7 @@ const Show = ({ product }) => {
         data.date = date
         data.quantity = quantity
         data.product_id = product.id
+        data.members = members
 
         post(route('bookings.store'), data)
     }
@@ -64,6 +96,43 @@ const Show = ({ product }) => {
                         <span>Height: 2.5m</span>
                         <span>Location: Manaslu, Gorkha</span>
                         <span>Country: Nepal</span>
+
+                        <div className="mt-2 border-2 rounded-lg border-gray-700 p-4">
+                            <div className="border border-gray-700 rounded p-2 flex flex-wrap cursor-pointer relative mt-4 mb-4" onClick={() => setChangeQuantity(!changeQuantity)}>
+                                <div className="flex justify-start gap-1 items-start text-sm md:text-base pr-2">
+                                    {calculateSelectedQuantity()}
+                                    <div className="absolute right-2 top-2.5">
+                                        {changeQuantity ? <FaArrowUp /> : <FaArrowDown />}
+                                    </div>
+                                </div>
+                            </div>
+                            {changeQuantity &&
+                                <div className="border-2 rounded-lg border-gray-700 p-4">
+                                    <div className="flex items-center justify-between md:justify-start md:gap-3 w-full mb-2">
+                                        <FaPlusCircle size={20} onClick={() => setAdultQuantity(adultQuantity + 1)} />
+                                        <span className="w-2">{adultQuantity}</span>
+                                        <FaMinusCircle size={20} onClick={() => adultQuantity > 1 && setAdultQuantity(adultQuantity - 1)} />
+                                        <div className="text-sm md:text-standard">Adult</div>
+                                    </div>
+                                    <div className="flex items-center justify-between md:justify-start md:gap-3 w-full mb-2">
+                                        <FaPlusCircle size={20} onClick={() => setChildQuantity(childQuantity + 1)} />
+                                        <span className="w-2">{childQuantity}</span>
+                                        <FaMinusCircle size={20} onClick={() => childQuantity && setChildQuantity(childQuantity - 1)} />
+                                        <div className="text-sm md:text-standard">Child</div>
+                                    </div>
+                                    <div className="flex items-center justify-between md:justify-start md:gap-3 w-full">
+                                        <FaPlusCircle size={20} onClick={() => setYouthQuantity(youthQuantity + 1)} />
+                                        <span className="w-2">{youthQuantity}</span>
+                                        <FaMinusCircle size={20} onClick={() => youthQuantity && setYouthQuantity(youthQuantity - 1)} />
+                                        <div className="text-sm md:text-standard">Youth</div>
+                                    </div>
+                                </div>
+                            }
+                            <Calendar ref={calendarRef} />
+                            <PrimaryButton onClick={open}>
+                                Book Now
+                            </PrimaryButton>
+                        </div>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -112,44 +181,51 @@ const Show = ({ product }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="place-self-center">
-                        <div className="border border-gray-700 rounded p-2 flex flex-wrap cursor-pointer relative mt-4 mb-4" onClick={() => setChangeQuantity(!changeQuantity)}>
-                            <div className="flex justify-start gap-1 items-start text-sm md:text-base pr-2">
-                                {calculateSelectedQuantity()}
-                                <div className="absolute right-2 top-2.5">
-                                    {changeQuantity ? <FaArrowUp /> : <FaArrowDown />}
-                                </div>
-                            </div>
-                        </div>
-                        {changeQuantity &&
-                            <div className="border-2 rounded-lg border-gray-700 p-4">
-                                <div className="flex items-center justify-between md:justify-start md:gap-3 w-full mb-2">
-                                    <FaPlusCircle size={20} onClick={() => setAdultQuantity(adultQuantity + 1)} />
-                                    <span className="w-2">{adultQuantity}</span>
-                                    <FaMinusCircle size={20} onClick={() => adultQuantity > 1 && setAdultQuantity(adultQuantity - 1)} />
-                                    <div className="text-sm md:text-standard">Adult</div>
-                                </div>
-                                <div className="flex items-center justify-between md:justify-start md:gap-3 w-full mb-2">
-                                    <FaPlusCircle size={20} onClick={() => setChildQuantity(childQuantity + 1)} />
-                                    <span className="w-2">{childQuantity}</span>
-                                    <FaMinusCircle size={20} onClick={() => childQuantity && setChildQuantity(childQuantity - 1)} />
-                                    <div className="text-sm md:text-standard">Child</div>
-                                </div>
-                                <div className="flex items-center justify-between md:justify-start md:gap-3 w-full">
-                                    <FaPlusCircle size={20} onClick={() => setYouthQuantity(youthQuantity + 1)} />
-                                    <span className="w-2">{youthQuantity}</span>
-                                    <FaMinusCircle size={20} onClick={() => youthQuantity && setYouthQuantity(youthQuantity - 1)} />
-                                    <div className="text-sm md:text-standard">Youth</div>
-                                </div>
-                            </div>
-                        }
-                        <Calendar ref={calendarRef} />
-                        <PrimaryButton onClick={bookNow}>
-                            Book Now
-                        </PrimaryButton>
-                    </div>
                 </div>
             </div>
+            <Modal show={isOpen} onClose={close}>
+                <div className="p-6">
+                    <div className="flex justify-between">
+                        <h2 className="text-lg font-medium text-gray-900">
+                            Add Members you want to book for this package
+                        </h2>
+                        <PrimaryButton onClick={handleAddMember} >Add Member</PrimaryButton>
+                    </div>
+                    <form onSubmit={bookNow}>
+                        <div>
+                            {members.map((member, index) => (
+                                <div key={index} className="flex mb-2 gap-2 items-center">
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        className="input input-bordered max-w-xs"
+                                        placeholder="Member Name"
+                                        value={member.name}
+                                        onChange={(event) => handleChange(index, event)}
+                                        required
+                                    />
+                                    <input
+                                        type="text"
+                                        name="number"
+                                        className="input input-bordered max-w-xs"
+                                        placeholder="Member Number"
+                                        value={member.number}
+                                        onChange={(event) => handleChange(index, event)}
+                                        required
+                                    />
+                                    <FaTrash size={20} className="cursor-pointer text-red-500" onClick={() => handleRemoveMember(index)} />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-6 flex justify-end gap-2">
+                            <SecondaryButton onClick={close}>Cancel</SecondaryButton>
+                            <PrimaryButton className="bg-green-500" disabled={processing}>
+                                Confirm
+                            </PrimaryButton>
+                        </div>
+                    </form>
+                </div>
+            </Modal>
         </FrontLayout>
     )
 }
