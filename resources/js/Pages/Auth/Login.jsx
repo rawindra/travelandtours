@@ -93,7 +93,7 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
 
                 </div>
-                    <Link href="auth/facebook/login" className=" button outline outline-1 p-1 rounded-sm bg-blue-950 text-white">
+                    <Link href={ route('facebook.login') } className=" button outline outline-1 p-1 rounded-sm bg-blue-950 text-white">
                         Facebook
                     </Link>
             </form>

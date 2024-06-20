@@ -7,7 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -36,9 +36,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('auth')->group(function(){
-    Route::get('facebook/login', [SocialiteController::class, 'handleLoginWithFacebook']);
+    
+    // Route::get('facebook/login', [SocialiteController::class, 'handleLoginWithFacebook']);
     Route::get('facebook/callback', [SocialiteController::class, 'handleFacebookCallback'])->name('facebook.callback');
 });
+Route::get('/auth/facebook/login', function () {
+    return Inertia::location(Socialite::driver('facebook')->redirect());    
+})->name('facebook.login');
 
 
 require __DIR__ . '/auth.php';
