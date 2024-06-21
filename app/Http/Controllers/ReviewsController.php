@@ -29,7 +29,12 @@ class ReviewsController extends Controller
      */
     public function store(StoreReviewsRequest $request)
     {
-        //
+        $result = Reviews::create($request->validated());
+        if ($result) {
+            return redirect()->back()->with('success', 'Review created successfully.');
+        } else {
+            return redirect()->back()->withErrors(['error' => 'An error occurred while creating the review.']);
+        }
     }
 
     /**
