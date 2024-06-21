@@ -11,7 +11,7 @@ class StoreReviewsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,23 @@ class StoreReviewsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+           'product_id' => ['required', 'exists:products,id'],
+           'user_id' => ['required', 'exists:users,id'],
+           'review' => ['required','string','max:255'],
+           'rating' => ['required', 'integer','min:1','max:5'],
         ];
     }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'product_id' => $this->product->id,
+            'user_id' => auth()->user()->id,
+        ]);
+    }
+
+
 }
