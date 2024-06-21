@@ -13,6 +13,7 @@ class SocialiteController extends Controller
      */
     public function handleLoginWithFacebook()
     {
+        // $this->handleSocialiteLogin('facebook');
         try {
             return Socialite::driver('facebook')->redirect();
         } catch (\Throwable $th) {
@@ -27,6 +28,7 @@ class SocialiteController extends Controller
 
     public function handleFacebookCallback(){
 
+        // $this->handleSocialiteCallback('facebook');
         $facebookUser = Socialite::driver('facebook')->stateless()->user();
     
         $currentUser = User::updateOrCreate([
@@ -41,6 +43,33 @@ class SocialiteController extends Controller
         auth()->login($currentUser);
 
         return redirect()->route('home');
+
     
+    }
+
+    public function handleSocialiteLogin($provider)
+    {
+        try {
+            return Socialite::driver($provider)->redirect();
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors(['error' => 'An error occurred while logging in with Facebook.']);
+        }
+    }
+
+    public function handleSocialiteCallback($provider)
+    {
+        $socialiteUser = Socialite::driver($provider)->stateless()->user();
+        $currentUser = User::updateOrCreate([
+            'email' => $socialiteUser->email,
+        ], [
+            'facebook_id' => $socialiteUser->id,
+            'name' => $socialiteUser->name,
+            'facebook_token' => $socialiteUser->token,
+            'facebook_refresh_token' => $socialiteUser->refreshToken,
+        ]);
+    
+        auth()->login($currentUser);
+
+        return redirect()->route('home');
     }
 }
