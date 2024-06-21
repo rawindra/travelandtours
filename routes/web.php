@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,7 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/bookings', [HomeController::class, 'bookings'])->name('bookings');
     Route::post('/booking/store', [HomeController::class, 'bookingStore'])->name('bookings.store');
     Route::delete('/bookings/{id}', [HomeController::class, 'bookingDestroy'])->name('bookings.destroy');
-
+    
+    Route::post('/reviews/store', [ReviewsController::class, 'store'])->name('reviews.store');
 });
 
 Route::prefix('auth')->group(function(){
