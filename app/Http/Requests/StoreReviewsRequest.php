@@ -34,10 +34,13 @@ class StoreReviewsRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        $this->merge([
-            'product_id' => $this->product->id,
-            'user_id' => auth()->user()->id,
-        ]);
+        //if post is coming from route name reviews.create then we need to merge the product_id and user_id with the request data
+        if ($this->routeIs('product.show')) {
+            $this->merge([
+                'product_id' => $this->product_id,
+                'user_id' => $this->user_id,
+            ]);
+        }
     }
 
 
