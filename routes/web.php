@@ -38,14 +38,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/reviews/store', [ReviewsController::class, 'store'])->name('reviews.store');
 });
 
-Route::prefix('auth')->group(function(){
+// Route::prefix('auth')->group(function(){
     
-    // Route::get('facebook/login', [SocialiteController::class, 'handleLoginWithFacebook']);
-    Route::get('facebook/callback', [SocialiteController::class, 'handleFacebookCallback'])->name('facebook.callback');
-});
-Route::get('/auth/facebook/login', function () {
-    return Inertia::location(Socialite::driver('facebook')->redirect());    
-})->name('facebook.login');
+//     // Route::get('facebook/login', [SocialiteController::class, 'handleLoginWithFacebook']);
+//     Route::get('facebook/callback', [SocialiteController::class, 'handleFacebookCallback'])->name('facebook.callback');
+// });
+// Route::get('/auth/facebook/login', function () {
+//     return Inertia::location(Socialite::driver('facebook')->redirect());    
+// })->name('facebook.login');
 
 
 require __DIR__ . '/auth.php';
