@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReviewsRequest;
 use App\Http\Requests\UpdateReviewsRequest;
+use App\Models\Product;
 use App\Models\Reviews;
+use App\Models\User;
+use Inertia\Inertia;
 
 class ReviewsController extends Controller
 {
@@ -13,7 +16,10 @@ class ReviewsController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = Reviews::with(['user', 'product'])->paginate(10);
+        return Inertia::render('Admin/Review/Index', [
+            'reviews' => $reviews,
+        ]);
     }
 
     /**
@@ -21,7 +27,12 @@ class ReviewsController extends Controller
      */
     public function create()
     {
-        //
+        $packages = Product::all();
+        $reviewers = User::where('role', 'user')->get();
+        return Inertia::render('Admin/Review/Create', [
+            'packages' => $packages,
+            'reviewers' => $reviewers,
+        ]);
     }
 
     /**
@@ -31,7 +42,7 @@ class ReviewsController extends Controller
     {
         $result = Reviews::create($request->validated());
         if ($result) {
-            return redirect()->back()->with('success', 'Review created successfully.');
+            return redirect()->route('admin.reviews.index')->with('success', 'Review created successfully.');
         } else {
             return redirect()->back()->withErrors(['error' => 'An error occurred while creating the review.']);
         }
