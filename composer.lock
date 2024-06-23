@@ -447,16 +447,16 @@
         },
         {
             "name": "devdojo/auth",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thedevdojo/auth.git",
-                "reference": "2cce84f2dc5cfe0bef930aa4ea6ff267eb72aaa0"
+                "reference": "1351afce06a3ed8ed691bead66d14d69fd761e13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thedevdojo/auth/zipball/2cce84f2dc5cfe0bef930aa4ea6ff267eb72aaa0",
-                "reference": "2cce84f2dc5cfe0bef930aa4ea6ff267eb72aaa0",
+                "url": "https://api.github.com/repos/thedevdojo/auth/zipball/1351afce06a3ed8ed691bead66d14d69fd761e13",
+                "reference": "1351afce06a3ed8ed691bead66d14d69fd761e13",
                 "shasum": ""
             },
             "require": {
@@ -519,9 +519,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thedevdojo/auth/issues",
-                "source": "https://github.com/thedevdojo/auth/tree/1.0.1"
+                "source": "https://github.com/thedevdojo/auth/tree/1.0.2"
             },
-            "time": "2024-06-15T16:06:52+00:00"
+            "time": "2024-06-23T01:54:57+00:00"
         },
         {
             "name": "devdojo/config-writer",
