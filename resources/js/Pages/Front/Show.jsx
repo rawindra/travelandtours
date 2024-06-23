@@ -16,8 +16,13 @@ import parse from "html-react-parser";
 import Modal from '@/Components/Modal';
 import SecondaryButton from "@/Components/SecondaryButton";
 import { FaTrash } from "react-icons/fa";
+import Reviews from "@/Components/shared/Review";
 
-const Show = ({ product }) => {
+const Show = ({ product, avgRating, reviews }) => {
+
+    console.log(reviews);
+    console.log(avgRating);
+
     const calendarRef = useRef();
 
     const { data, post, processing } = useForm();
@@ -146,11 +151,11 @@ const Show = ({ product }) => {
                             <FaStar className="w-3 sm:w-3.5" />
                             <div className="flex gap-[7px] ml-1 items-center">
                                 <div className="text-sm 2xl:text-standard">
-                                    5.0
+                                    {avgRating}
                                 </div>
                                 <div className="p-[1.5px] md:p-[2px] rounded-full bg-gray-500"></div>
                                 <span className="text-sm 2xl:text-standard text-gray-700 dark:text-gray-400">
-                                    237 Ratings
+                                    {reviews.length} Ratings
                                 </span>
                             </div>
                         </div>
@@ -182,6 +187,9 @@ const Show = ({ product }) => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="flex">
+                <Reviews  reviews={reviews} />
             </div>
             <Modal show={isOpen} onClose={close}>
                 <div className="p-6">
