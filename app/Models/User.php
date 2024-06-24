@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Devdojo\Auth\Models\User as AuthUser;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends AuthUser
 {
@@ -56,6 +58,11 @@ class User extends AuthUser
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function socialUsers() : HasMany
+    {
+        return $this->hasMany(SocialProviderUser::class,'user_id');
     }
 
     public function avatar()
