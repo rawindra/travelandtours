@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::define('viewAuthSetup', function (\DevDojo\Auth\Models\User $user) {
             return in_array($user->email, [
-                '[email protected]',
+                'admin@admin.com',
             ]);
         });
     }
