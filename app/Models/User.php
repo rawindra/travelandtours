@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Devdojo\Auth\Models\SocialProviderUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,5 +56,11 @@ class User extends AuthUser
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function avatar()
+    {
+        $socialProvider = SocialProviderUser::where('user_id', auth()->id())->first();
+        return $socialProvider->avatar;
     }
 }
