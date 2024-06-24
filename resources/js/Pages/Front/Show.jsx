@@ -17,11 +17,9 @@ import Modal from '@/Components/Modal';
 import SecondaryButton from "@/Components/SecondaryButton";
 import { FaTrash } from "react-icons/fa";
 import Reviews from "@/Components/shared/Review";
+import BookingForm from "@/Components/BookingForm";
 
 const Show = ({ product, avgRating, reviews }) => {
-
-    console.log(reviews);
-    console.log(avgRating);
 
     const calendarRef = useRef();
 
@@ -32,23 +30,7 @@ const Show = ({ product, avgRating, reviews }) => {
     const [childQuantity, setChildQuantity] = useState(0);
     const [youthQuantity, setYouthQuantity] = useState(0);
     const [isOpen, setIsOpen] = useState(false)
-    const [members, setMembers] = useState([{ name: '', number: '' }]);
 
-    const handleChange = (index, event) => {
-        const values = [...members];
-        values[index][event.target.name] = event.target.value;
-        setMembers(values);
-    };
-
-    const handleAddMember = () => {
-        setMembers([...members, { name: '', number: '' }]);
-    };
-
-    const handleRemoveMember = (index) => {
-        const values = [...members];
-        values.splice(index, 1);
-        setMembers(values);
-    };
 
     function open() {
         setIsOpen(true)
@@ -72,8 +54,7 @@ const Show = ({ product, avgRating, reviews }) => {
         return selectedQuantity
     }
 
-    const bookNow = (e) => {
-        e.preventDefault()
+    const bookNow = (members) => {
 
         const selectedDay = calendarRef.current.getCalendarState().selectedDay
         const date = format(selectedDay, 'yyyy-MM-dd')
@@ -82,6 +63,7 @@ const Show = ({ product, avgRating, reviews }) => {
         data.date = date
         data.quantity = quantity
         data.product_id = product.id
+
         data.members = members
 
         post(route('bookings.store'), data)
@@ -189,49 +171,11 @@ const Show = ({ product, avgRating, reviews }) => {
                 </div>
             </div>
             <div className="flex">
-                <Reviews  reviews={reviews} />
+                <Reviews reviews={reviews} />
             </div>
             <Modal show={isOpen} onClose={close}>
                 <div className="p-6">
-                    <div className="flex justify-between">
-                        <h2 className="text-lg font-medium text-gray-900">
-                            Add Members you want to book for this package
-                        </h2>
-                        <PrimaryButton onClick={handleAddMember} >Add Member</PrimaryButton>
-                    </div>
-                    <form onSubmit={bookNow}>
-                        <div>
-                            {members.map((member, index) => (
-                                <div key={index} className="flex mb-2 gap-2 items-center">
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        className="input input-bordered max-w-xs"
-                                        placeholder="Member Name"
-                                        value={member.name}
-                                        onChange={(event) => handleChange(index, event)}
-                                        required
-                                    />
-                                    <input
-                                        type="text"
-                                        name="number"
-                                        className="input input-bordered max-w-xs"
-                                        placeholder="Member Number"
-                                        value={member.number}
-                                        onChange={(event) => handleChange(index, event)}
-                                        required
-                                    />
-                                    <FaTrash size={20} className="cursor-pointer text-red-500" onClick={() => handleRemoveMember(index)} />
-                                </div>
-                            ))}
-                        </div>
-                        <div className="mt-6 flex justify-end gap-2">
-                            <SecondaryButton onClick={close}>Cancel</SecondaryButton>
-                            <PrimaryButton className="bg-green-500" disabled={processing}>
-                                Confirm
-                            </PrimaryButton>
-                        </div>
-                    </form>
+                    <BookingForm bookNow={bookNow} close={close} processing={processing} />
                 </div>
             </Modal>
         </FrontLayout>

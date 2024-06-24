@@ -49,9 +49,8 @@ class HomeController extends Controller
             'date' => 'required',
             'quantity' => 'required',
             'product_id' => 'required',
-            'members' => 'required|array|min:1',
-            'members.*.name' => 'required|string',
-            'members.*.number' => 'required|string',
+            'members.0.name' => 'required',
+            'members.0.number' => 'required'
         ]);
 
         $validated['user_id'] = auth()->user()->id;
