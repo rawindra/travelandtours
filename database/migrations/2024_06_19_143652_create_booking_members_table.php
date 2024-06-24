@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('booking_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('number');
+            $table->boolean('is_leader')->default(false);
             $table->timestamps();
         });
     }
