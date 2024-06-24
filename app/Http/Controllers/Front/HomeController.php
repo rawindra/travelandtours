@@ -19,8 +19,13 @@ class HomeController extends Controller
 
     public function show($id)
     {
+        $product = Product::find($id);
+        $avgRating = round($product->reviews->avg('rating'), 1);
+        $product = $product->with('reviews.user')->get();
         return inertia('Front/Show', [
+            'reviews' => $product->first()->reviews,
             'product' => Product::find($id),
+            'avgRating' => $avgRating,
         ]);
     }
 
