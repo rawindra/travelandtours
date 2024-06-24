@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 const Reviews = ({ reviews }) => {
+  console.log(reviews);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -41,7 +42,7 @@ const Reviews = ({ reviews }) => {
             <div className="flex items-center text-center text-gray-500 lg:mx-8" dangerouslySetInnerHTML={{__html:currentReview.review}}/>
 
             <div className="flex flex-col items-center justify-center mt-8">
-              <img className="object-cover rounded-full w-14 h-14" src={currentReview.image} alt={currentReview.user.name} />
+              <img className="object-cover rounded-full w-14 h-14" src={currentReview.user.social_users[0].avatar} alt={currentReview.user.social_users[0].avatar} />
 
               <div className="mt-4 text-center">
                 <h1 className="font-semibold text-gray-800 dark:text-white">{currentReview.user.name}</h1>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,9 +22,9 @@ class HomeController extends Controller
     {
         $product = Product::find($id);
         $avgRating = round($product->reviews->avg('rating'), 1);
-        $product = $product->with('reviews.user')->get();
+        $reviews = $product->reviews;
         return inertia('Front/Show', [
-            'reviews' => $product->first()->reviews,
+            'reviews' =>  $reviews->load('user.socialUsers'),
             'product' => Product::find($id),
             'avgRating' => $avgRating,
         ]);
