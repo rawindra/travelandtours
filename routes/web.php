@@ -22,6 +22,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
+    Route::get('/products/{product}/images', [ProductController::class, 'images'])->name('products.images');
+    Route::post('/products/{product}/images', [ProductController::class, 'imageUpload'])->name('products.images.upload');
+    Route::delete('/products/{product}/images/{product_image}', [ProductController::class, 'imageDestroy'])->name('products.images.destroy');
     Route::resource('reviews', ReviewsController::class);
 });
 
@@ -34,12 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/bookings', [HomeController::class, 'bookings'])->name('bookings');
     Route::post('/booking/store', [HomeController::class, 'bookingStore'])->name('bookings.store');
     Route::delete('/bookings/{id}', [HomeController::class, 'bookingDestroy'])->name('bookings.destroy');
-    
+
     Route::post('/reviews/store', [ReviewsController::class, 'store'])->name('reviews.store');
 });
 
 // Route::prefix('auth')->group(function(){
-    
+
 //     // Route::get('facebook/login', [SocialiteController::class, 'handleLoginWithFacebook']);
 //     Route::get('facebook/callback', [SocialiteController::class, 'handleFacebookCallback'])->name('facebook.callback');
 // });

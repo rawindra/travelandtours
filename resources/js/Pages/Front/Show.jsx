@@ -75,7 +75,52 @@ const Show = ({ product, avgRating, reviews }) => {
             <div className="max-w-screen-xl mx-auto p-4 mb-[50px]">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="col-span-2">
-                        <Slider />
+                        <Slider images={product?.images} />
+                        <div className="py-2">
+                            <div className="font-bold text-xl mb-2">{product.name}</div>
+                            <div className="flex flex-wrap items-center gap-1">
+                                <FaStar className="w-3 sm:w-3.5" />
+                                <FaStar className="w-3 sm:w-3.5" />
+                                <FaStar className="w-3 sm:w-3.5" />
+                                <FaStar className="w-3 sm:w-3.5" />
+                                <FaStar className="w-3 sm:w-3.5" />
+                                <div className="flex gap-[7px] ml-1 items-center">
+                                    <div className="text-sm 2xl:text-standard">
+                                        {avgRating}
+                                    </div>
+                                    <div className="p-[1.5px] md:p-[2px] rounded-full bg-gray-500"></div>
+                                    <span className="text-sm 2xl:text-standard text-gray-700 dark:text-gray-400">
+                                        {reviews.length} Ratings
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="border-t-2 mt-4 py-4">
+                                <p>{product.excerpt}</p>
+                                <div className="flex flex-col gap-2 mt-2">
+                                    <div className="flex items-center gap-1">
+                                        <span><FaClock className="w-6" size={17} /></span>
+                                        <span className="text-base font-medium md:text-med">
+                                            Duration:
+                                        </span>
+                                        <span className="text-gray-700 dark:text-gray-500">
+                                            17 days
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <span><RxCrossCircled className="w-6" size={20} /></span>
+                                        <span className="text-base font-medium md:text-med">
+                                            Cancellation:
+                                        </span>
+                                        <span className="text-gray-700 dark:text-gray-500">
+                                            1 day
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="no-tailwindcss-base">
+                                    {parse(product.description)}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="flex flex-col">
                         <span>Latitude: 12.9716</span>
@@ -119,53 +164,6 @@ const Show = ({ product, avgRating, reviews }) => {
                             <PrimaryButton onClick={open}>
                                 Book Now
                             </PrimaryButton>
-                        </div>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="py-2">
-                        <div className="font-bold text-xl mb-2">{product.name}</div>
-                        <div className="flex flex-wrap items-center gap-1">
-                            <FaStar className="w-3 sm:w-3.5" />
-                            <FaStar className="w-3 sm:w-3.5" />
-                            <FaStar className="w-3 sm:w-3.5" />
-                            <FaStar className="w-3 sm:w-3.5" />
-                            <FaStar className="w-3 sm:w-3.5" />
-                            <div className="flex gap-[7px] ml-1 items-center">
-                                <div className="text-sm 2xl:text-standard">
-                                    {avgRating}
-                                </div>
-                                <div className="p-[1.5px] md:p-[2px] rounded-full bg-gray-500"></div>
-                                <span className="text-sm 2xl:text-standard text-gray-700 dark:text-gray-400">
-                                    {reviews.length} Ratings
-                                </span>
-                            </div>
-                        </div>
-                        <div className="border-t-2 mt-4 py-4">
-                            <p>{product.excerpt}</p>
-                            <div className="flex flex-col gap-2 mt-2">
-                                <div className="flex items-center gap-1">
-                                    <span><FaClock className="w-6" size={17} /></span>
-                                    <span className="text-base font-medium md:text-med">
-                                        Duration:
-                                    </span>
-                                    <span className="text-gray-700 dark:text-gray-500">
-                                        17 days
-                                    </span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <span><RxCrossCircled className="w-6" size={20} /></span>
-                                    <span className="text-base font-medium md:text-med">
-                                        Cancellation:
-                                    </span>
-                                    <span className="text-gray-700 dark:text-gray-500">
-                                        1 day
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="no-tailwindcss-base">
-                                {parse(product.description)}
-                            </div>
                         </div>
                     </div>
                 </div>

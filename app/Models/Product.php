@@ -17,8 +17,13 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function reviews() : HasMany
+    public function reviews(): HasMany
     {
         return $this->hasMany(Reviews::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }

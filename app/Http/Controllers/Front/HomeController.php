@@ -24,8 +24,8 @@ class HomeController extends Controller
         $avgRating = round($product->reviews->avg('rating'), 1);
         $reviews = $product->reviews;
         return inertia('Front/Show', [
-            'reviews' =>  $reviews->load('user.socialUsers'),
-            'product' => Product::find($id),
+            'reviews' => $reviews->load('user.socialUsers'),
+            'product' => $product->load('images'),
             'avgRating' => $avgRating,
         ]);
     }
