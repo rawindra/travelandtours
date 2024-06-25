@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -79,4 +80,35 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index');
     }
+
+    public function images(Product $product)
+    {
+        return inertia('Admin/Product/Images', [
+            'product' => $product->load('images'),
+        ]);
+    }
+
+    public function imageUpload(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'image' => 'required|image'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('products', 'public');
+        }
+
+        $product->images()->create($validated);
+
+        return redirect()->route('admin.products.images', $product);
+    }
+
+    public function imageDestroy(Product $product, ProductImage $productImage)
+    {
+        Storage::disk('public')->delete($productImage->image);
+        $product->images()->where('id', $productImage->id)->delete();
+
+        return redirect()->route('admin.products.images', $product);
+    }
+
 }

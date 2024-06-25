@@ -42,6 +42,7 @@ export default function Index({ auth, products, app }) {
                                 <td>{product.price}</td>
                                 <td>{product.category.name}</td>
                                 <td className='flex items-center gap-2'>
+                                    <LinkAsButton href={route('admin.products.images', product.id)} className="bg-blue-500 btn-xs">Images</LinkAsButton>
                                     <LinkAsButton href={route('admin.products.edit', product.id)} className="bg-yellow-500 btn-xs">Edit</LinkAsButton>
                                     <form onSubmit={(event) => submit(event, product)}>
                                         <DangerButton className="btn-xs" disabled={processing}>Delete</DangerButton>
