@@ -90,15 +90,16 @@ class ProductController extends Controller
 
     public function imageUpload(Request $request, Product $product)
     {
-        $validated = $request->validate([
-            'image' => 'required|image'
+        $request->validate([
+            'images.*' => 'required|image'
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
-        }
+        $images = $request->file('images');
 
-        $product->images()->create($validated);
+        foreach ($images as $image) {
+            $path = $image->store("products/$product->id", 'public');
+            $product->images()->create(['image' => $path]);
+        }
 
         return redirect()->route('admin.products.images', $product);
     }

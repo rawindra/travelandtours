@@ -7,8 +7,8 @@ import PrimaryButton from '@/Components/PrimaryButton';
 
 const Images = ({ auth, product, app }) => {
 
-    const { data, setData, processing, errors, reset } = useForm({
-        image: '',
+    const { data, setData, processing, errors } = useForm({
+        images: [],
     })
 
     const { delete: destroy, processing: destroyProcessing } = useForm()
@@ -35,13 +35,15 @@ const Images = ({ auth, product, app }) => {
             <Head title="Product Images" />
             <form onSubmit={submit}>
                 <label htmlFor="">Upload Images</label>
+                <span className='ml-2 text-red-500 italic'>Hold Ctrl Key and Select Image For multiple Upload</span>
                 <div className='mt-2'>
                     <input
                         type="file"
-                        onChange={e => { setData('image', e.target.files[0]) }}
+                        multiple
+                        onChange={e => { setData('images', e.target.files) }}
                         className="file-input file-input-bordered w-full max-w-xs"
                     />
-                    {errors.image && <span className='text-red-500'>{errors.image}</span>}
+                    {errors.images && <span className='text-red-500'>{errors.images}</span>}
                 </div>
                 <PrimaryButton className='mt-4' disabled={processing}>Upload</PrimaryButton>
             </form>
