@@ -2,8 +2,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import SlickSlider from "react-slick";
+import { usePage } from "@inertiajs/react";
 
-const Slider = () => {
+const Slider = ({ images }) => {
+
+    const { app, product } = usePage().props
 
     const settings = {
         dots: false,
@@ -18,18 +21,11 @@ const Slider = () => {
 
     return (
         <SlickSlider {...settings}>
-            <div>
-                <img src="https://placehold.co/600x400" alt="image1" className="w-full" />
-            </div>
-            <div>
-                <img src="https://placehold.co/600x400" alt="image2" className="w-full" />
-            </div>
-            <div>
-                <img src="https://placehold.co/600x400" alt="image3" className="w-full" />
-            </div>
-            <div>
-                <img src="https://placehold.co/600x400" alt="image4" className="w-full" />
-            </div>
+            {images.map((image, index) => (
+                <div key={index}>
+                    <img src={app.storage_url + '/' + product.image} className="h-[400px] w-full" />
+                </div>
+            ))}
         </SlickSlider>
     )
 }

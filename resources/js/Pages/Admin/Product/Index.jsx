@@ -41,10 +41,10 @@ export default function Index({ auth, products, app }) {
                                 <td className='truncate'>{product.excerpt}</td>
                                 <td>{product.price}</td>
                                 <td>{product.category.name}</td>
-                                <td className='flex items-center gap-2'>
-                                    <LinkAsButton href={route('admin.products.images', product.id)} className="bg-blue-500 btn-xs">Images</LinkAsButton>
-                                    <LinkAsButton href={route('admin.products.edit', product.id)} className="bg-yellow-500 btn-xs">Edit</LinkAsButton>
-                                    <form onSubmit={(event) => submit(event, product)}>
+                                <td>
+                                    <LinkAsButton href={route('admin.products.images', product.id)} className="bg-blue-500 btn-xs mr-2">Images</LinkAsButton>
+                                    <LinkAsButton href={route('admin.products.edit', product.id)} className="bg-yellow-500 btn-xs mr-2">Edit</LinkAsButton>
+                                    <form onSubmit={(event) => submit(event, product)} className='inline'>
                                         <DangerButton className="btn-xs" disabled={processing}>Delete</DangerButton>
                                     </form>
                                 </td>
