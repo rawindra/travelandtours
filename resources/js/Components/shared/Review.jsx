@@ -2,7 +2,7 @@ import React from 'react'
 import { FaStar } from 'react-icons/fa'
 import RatingBar from '../RatingBar'
 
-const Review = () => {
+const Review = ({ reviews }) => {
     return (
         <div>
             <div className="mt-4 text-med md:text-lg font-semibold">
@@ -32,28 +32,43 @@ const Review = () => {
                     <RatingBar width={0} star={1} />
                 </div>
             </div>
-            <div className='mb-4'>
-                <div className='flex gap-2'>
-                    <div className="mr-2 font-semibold text-orange-500">
-                        Chencv5112cp
-                    </div>
-                    <div className="flex flex-wrap items-center gap-1 md:pt-1.5">
-                        <FaStar className="w-3 sm:w-3.5" />
-                        <FaStar className="w-3 sm:w-3.5" />
-                        <FaStar className="w-3 sm:w-3.5" />
-                        <FaStar className="w-3 sm:w-3.5" />
-                        <FaStar className="w-3 sm:w-3.5" />
-                    </div>
-                </div>
-                <div className="ml-auto text-sm text-gray-700 dark:text-gray-400">
-                    Jun 25, 2024
-                </div>
-                <div className="no-tailwindcss-base">
-                    Happy tpur in Nepal ! - Nepal is beautiful country to travel.
-                    we choose eight days your in Nepal we found every thing was perfect.
-                    hotel are nice and clean . our guide and driver are very good.
-                </div>
-            </div>
+            {
+                reviews.map((review, index) => {
+                    return (
+                        // <div key={index} className='flex gap-2'>
+                        //     <div className="mr-2 font-semibold text-orange-500">
+                        //         {review.user.name}
+                        //     </div>
+                        //     <div className="flex flex-wrap items-center gap-1 md:pt-1.5">
+                        //         <FaStar className="w-3 sm:w-3.5" />
+                        //         <FaStar className="w-3 sm:w-3.5" />
+                        //         <FaStar className="w-3 sm:w-3.5" />
+                        //         <FaStar className="w-3 sm:w-3.5" />
+                        //         <FaStar className="w-3 sm:w-3.5" />
+                        //     </div>
+                        // </div>
+
+                        <div className='mb-4'>
+                            <div className='flex gap-2'>
+                                <div className="mr-2 font-semibold text-orange-500">
+                                    {review.user.name}
+                                </div>
+                                <div className="flex flex-wrap items-center gap-1 md:pt-1.5">
+                                    {[...Array(review.rating)].map((_, index) => (
+                                        <FaStar className="w-3 sm:w-3.5" index={index} />
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="ml-auto text-sm text-gray-700 dark:text-gray-400">
+                                Jun 25, 2024
+                            </div>
+                            <div className="no-tailwindcss-base" dangerouslySetInnerHTML={{ __html: review.review }}>
+                            </div>
+                        </div>
+                    )
+                })
+            }
+           
         </div>
     )
 }
