@@ -27,6 +27,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/products/{product}/images/{product_image}', [ProductController::class, 'imageDestroy'])->name('products.images.destroy');
     Route::resource('reviews', ReviewsController::class);
 });
+Route::post('submit-review', [HomeController::class,'storeReview'])->middleware('auth')->name('reviews.submit');
 
 
 Route::middleware('auth')->group(function () {
@@ -37,8 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/bookings', [HomeController::class, 'bookings'])->name('bookings');
     Route::post('/booking/store', [HomeController::class, 'bookingStore'])->name('bookings.store');
     Route::delete('/bookings/{id}', [HomeController::class, 'bookingDestroy'])->name('bookings.destroy');
-
-    Route::post('/reviews/store', [ReviewsController::class, 'store'])->name('reviews.store');
 });
 
 // Route::prefix('auth')->group(function(){

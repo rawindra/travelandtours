@@ -16,8 +16,8 @@ import parse from "html-react-parser";
 import Modal from '@/Components/Modal';
 import SecondaryButton from "@/Components/SecondaryButton";
 import { FaTrash } from "react-icons/fa";
-import Reviews from "@/Components/shared/Review";
 import BookingForm from "@/Components/BookingForm";
+import Review from "@/Components/shared/Review";
 
 const Show = ({ product, avgRating, reviews }) => {
 
@@ -94,7 +94,7 @@ const Show = ({ product, avgRating, reviews }) => {
                                     </span>
                                 </div>
                             </div>
-                            <div className="border-t-2 mt-4 py-4">
+                            <div className="border-t-2 border-b-2 mt-4 py-4">
                                 <p>{product.excerpt}</p>
                                 <div className="flex flex-col gap-2 mt-2">
                                     <div className="flex items-center gap-1">
@@ -123,11 +123,13 @@ const Show = ({ product, avgRating, reviews }) => {
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        <span>Latitude: 12.9716</span>
-                        <span>Longitude: 77.5946</span>
-                        <span>Height: 2.5m</span>
-                        <span>Location: Manaslu, Gorkha</span>
-                        <span>Country: Nepal</span>
+                        <div className="hidden md:block">
+                            <p>Latitude: 12.9716</p>
+                            <p>Longitude: 77.5946</p>
+                            <p>Height: 2.5m</p>
+                            <p>Location: Manaslu, Gorkha</p>
+                            <p>Country: Nepal</p>
+                        </div>
 
                         <div className="mt-2 border-2 rounded-lg border-gray-700 p-4">
                             <div className="border border-gray-700 rounded p-2 flex flex-wrap cursor-pointer relative mt-4 mb-4" onClick={() => setChangeQuantity(!changeQuantity)}>
@@ -167,9 +169,9 @@ const Show = ({ product, avgRating, reviews }) => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="flex">
-                <Reviews reviews={reviews} />
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                    <Review reviews={reviews} product={product} avgRating={avgRating} />
+                </div>
             </div>
             <Modal show={isOpen} onClose={close}>
                 <div className="p-6">
