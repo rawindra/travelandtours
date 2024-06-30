@@ -170,7 +170,7 @@ const Show = ({ product, avgRating, reviews }) => {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                    <Review reviews={reviews} />
+                    <Review reviews={reviews} product={product} />
                 </div>
             </div>
             <Modal show={isOpen} onClose={close}>

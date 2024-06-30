@@ -1,8 +1,26 @@
+/**
+ * The `Review` component displays a review section with customer ratings, a rating bar, and individual reviews.
+ * It uses the `useForm` hook from the `@inertiajs/react` library to manage the state of the review form.
+ * The component receives an array of `reviews` as a prop, which it maps and renders as individual review items.
+ * The review form allows the user to select a rating and write a review, which is submitted using the `handleSubmit` function.
+ */
 import React from 'react'
 import { FaStar } from 'react-icons/fa'
 import RatingBar from '../RatingBar'
+import { useForm } from '@inertiajs/react'
 
-const Review = ({ reviews }) => {
+const Review = ({ reviews, product }) => {
+    const { data, setData, post, processing, errors } = useForm({
+        rating: 0,
+        review: '',
+        product: product.id,
+    })
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        post('/submit-review', data)
+    }
+
     return (
         <div>
             <div className="mt-4 text-med md:text-lg font-semibold">
@@ -56,6 +74,34 @@ const Review = ({ reviews }) => {
                     )
                 })
             }
+
+            <form className='grid cols-1 md:grid-cols-1' onSubmit={handleSubmit}>
+                <div className="rating mb-2">
+
+                    <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" value={1} onChange={(e) => setData('rating', e.target.value)} />
+                    <input
+                        type="radio"
+                        name="rating-2"
+                        className="mask mask-star-2 bg-orange-400"
+                        value={2}
+                        onChange={(e) => setData('rating', e.target.value)}
+                        defaultChecked />
+
+
+
+                    <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" value={3} onChange={(e) => setData('rating', e.target.value)} />
+                    <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" value={4} onChange={(e) => setData('rating', e.target.value)} />
+                    <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400" value={5} onChange={(e) => setData('rating', e.target.value)} />
+                </div>
+                <textarea 
+                    className="textarea textarea-primary mb-2" 
+                    placeholder="write your review" 
+                    value={data.review}
+                    onChange={(e) => setData('review', e.target.value)}
+                ></textarea>
+
+                <button className="btn btn-outline w-16" disabled={processing}>Submit</button>
+            </form>
            
         </div>
     )
