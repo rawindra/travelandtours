@@ -35,18 +35,6 @@ const Review = ({ reviews }) => {
             {
                 reviews.map((review, index) => {
                     return (
-                        // <div key={index} className='flex gap-2'>
-                        //     <div className="mr-2 font-semibold text-orange-500">
-                        //         {review.user.name}
-                        //     </div>
-                        //     <div className="flex flex-wrap items-center gap-1 md:pt-1.5">
-                        //         <FaStar className="w-3 sm:w-3.5" />
-                        //         <FaStar className="w-3 sm:w-3.5" />
-                        //         <FaStar className="w-3 sm:w-3.5" />
-                        //         <FaStar className="w-3 sm:w-3.5" />
-                        //         <FaStar className="w-3 sm:w-3.5" />
-                        //     </div>
-                        // </div>
 
                         <div className='mb-4'>
                             <div className='flex gap-2'>
@@ -60,7 +48,7 @@ const Review = ({ reviews }) => {
                                 </div>
                             </div>
                             <div className="ml-auto text-sm text-gray-700 dark:text-gray-400">
-                                Jun 25, 2024
+                                {new Date(review.created_at).toDateString()}
                             </div>
                             <div className="no-tailwindcss-base" dangerouslySetInnerHTML={{ __html: review.review }}>
                             </div>
