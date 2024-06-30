@@ -9,12 +9,17 @@ import { FaStar } from 'react-icons/fa'
 import RatingBar from '../RatingBar'
 import { useForm } from '@inertiajs/react'
 
-const Review = ({ reviews, product }) => {
+const Review = ({ reviews, product, avgRating }) => {
     const { data, setData, post, processing, errors } = useForm({
         rating: 0,
         review: '',
         product: product.id,
     })
+
+    const calculatePercentageOfRating = (rating) => {
+        let numbersOfRating = reviews.filter(review => review.rating === rating).length
+        return (numbersOfRating / reviews.length) * 100
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -29,25 +34,24 @@ const Review = ({ reviews, product }) => {
             <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="flex gap-2 md:gap-0 md:flex-col pb-2 items-center md:justify-center md:pb-0">
                     <div className="text-lg md:text-4xl font-semibold md:pt-1.5">
-                        5.0
+                        {avgRating}
                     </div>
                     <div className="flex flex-wrap items-center gap-1 md:pt-1.5">
-                        <FaStar className="w-3 sm:w-3.5" />
-                        <FaStar className="w-3 sm:w-3.5" />
-                        <FaStar className="w-3 sm:w-3.5" />
-                        <FaStar className="w-3 sm:w-3.5" />
-                        <FaStar className="w-3 sm:w-3.5" />
+                        {[...Array(avgRating)].map((_, index) => (
+                            <FaStar className="w-3 sm:w-3.5" index={index} />
+                        ))}
                     </div>
                     <div className="text-base md:text-lg text-gray-600 md:pt-1.5">
-                        11 Ratings
+                        {reviews.length} Ratings
                     </div>
                 </div>
                 <div className='w-full'>
-                    <RatingBar width={100} star={5} />
-                    <RatingBar width={75} star={4} />
-                    <RatingBar width={50} star={3} />
-                    <RatingBar width={25} star={2} />
-                    <RatingBar width={0} star={1} />
+                    
+                    <RatingBar width={calculatePercentageOfRating(5)} star={5} />
+                    <RatingBar width={calculatePercentageOfRating(4)} star={4} />
+                    <RatingBar width={calculatePercentageOfRating(3)} star={3} />
+                    <RatingBar width={calculatePercentageOfRating(2)} star={2} />
+                    <RatingBar width={calculatePercentageOfRating(1)} star={1} />
                 </div>
             </div>
             {
