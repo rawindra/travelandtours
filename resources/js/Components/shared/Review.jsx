@@ -24,6 +24,7 @@ const Review = ({ reviews, product, avgRating }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         post('/submit-review', data)
+        data.review = '';
     }
 
     return (
@@ -37,7 +38,7 @@ const Review = ({ reviews, product, avgRating }) => {
                         {avgRating}
                     </div>
                     <div className="flex flex-wrap items-center gap-1 md:pt-1.5">
-                        {[...Array(avgRating)].map((_, index) => (
+                        {[...Array(5)].map((_, index) => (
                             <FaStar className="w-3 sm:w-3.5" index={index} />
                         ))}
                     </div>
