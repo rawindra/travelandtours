@@ -75,8 +75,13 @@ class ReviewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reviews $reviews)
+    public function destroy($reviewId)
     {
-        //
+        $review = Reviews::find($reviewId);
+        $result = $review->delete();
+        if(!$result) {
+            return redirect()->back()->withErrors(['error' => 'An error occurred while deleting the review.']);
+        }
+        return redirect()->route('admin.reviews.index')->with('success', 'Review deleted successfully.');
     }
 }
