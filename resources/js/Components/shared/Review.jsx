@@ -39,7 +39,7 @@ const Review = ({ reviews, product, avgRating }) => {
                     </div>
                     <div className="flex flex-wrap items-center gap-1 md:pt-1.5">
                         {[...Array(5)].map((_, index) => (
-                            <FaStar className="w-3 sm:w-3.5" index={index} />
+                            <FaStar className="w-3 sm:w-3.5" index={index}  key={index}/>
                         ))}
                     </div>
                     <div className="text-base md:text-lg text-gray-600 md:pt-1.5">
@@ -59,14 +59,14 @@ const Review = ({ reviews, product, avgRating }) => {
                 reviews.map((review, index) => {
                     return (
 
-                        <div className='mb-4'>
+                        <div className='mb-4' key={index}>
                             <div className='flex gap-2'>
                                 <div className="mr-2 font-semibold text-orange-500">
                                     {review.user.name}
                                 </div>
                                 <div className="flex flex-wrap items-center gap-1 md:pt-1.5">
                                     {[...Array(review.rating)].map((_, index) => (
-                                        <FaStar className="w-3 sm:w-3.5" index={index} />
+                                        <FaStar className="w-3 sm:w-3.5" index={index} key={index}/>
                                     ))}
                                 </div>
                             </div>
