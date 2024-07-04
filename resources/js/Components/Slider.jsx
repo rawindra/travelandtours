@@ -23,7 +23,7 @@ const Slider = ({ images }) => {
         <SlickSlider {...settings}>
             {images.map((image, index) => (
                 <div key={index}>
-                    <img src={app.storage_url + '/' + product.image} className="h-[400px] w-full" />
+                    <img src={app.storage_url + '/' + image.image} className="h-[400px] w-full" />
                 </div>
             ))}
         </SlickSlider>
