@@ -97,7 +97,7 @@ const Calendar = forwardRef((props, ref) => {
                                     !isEqual(day, selectedDay) &&
                                     !isToday(day) &&
                                     isSameMonth(day, firstDayCurrentMonth) &&
-                                    'text-gray-100',
+                                    'text-black dark:text-gray-100',
                                     !isEqual(day, selectedDay) &&
                                     !isToday(day) &&
                                     !isSameMonth(day, firstDayCurrentMonth) &&
