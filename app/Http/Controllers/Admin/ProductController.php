@@ -90,9 +90,9 @@ class ProductController extends Controller
 
     public function imageUpload(Request $request, Product $product)
     {
-        $request->validate([
-            'images.*' => 'required|image'
-        ]);
+        // $request->validate([
+        //     'images.*' => 'required'
+        // ]);
 
         $images = $request->file('images');
 
